@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="./css/profile.css">
+</head>
+<body>
+  <div class="HeaderContainer">
+    <div class="leftcontent">
+     <h1 class="logo1"><a href="/" style="text-decoration: none; color: black;"> StudentPortal</a></h1>
+    </div>
+    <div class="middlecontent">
+      <li class="horizontal_navbar"><a href="/"><img class="icon" src="images/home.png"></a></li>
+      <li class="horizontal_navbar" > <a href="https://my-chatcordroom.herokuapp.com/"> <img class="icon" src="images/msg_icon.png"></a></li>
+      <li class="horizontal_navbar" >  <a href="/classroom"><img class="classimg" src="images/classroom.png"/></a> </li>        
+      <!-- <li class="horizontal_navbar" >  <a href="https://classroom.google.com/"><img class="classimg" src="images/classroom.png"/></a> </li>         -->
+      <li class="horizontal_navbar" > <img class="icon" src="images/notification.jpeg"></li>
+    </div>
+    <div class="rightcontent">
+      <!-- <li class="Logout horizontal_navbar" ><a href="/login"> Login </a></li> -->
+      <li class="Logout horizontal_navbar" ><a href="/logout"> Logout  </a></li>
+      <li class="horizontal_navbar" >  <a href="/profile"><img class="profile" src="images/profilePic.jpeg"/></a> </li>
+    </div>
+  </div>
+    <div class="container">
+
+      <div class="leftContainer">
+        <div id="user-info">
+          <img src="images/add_pic.jpg" id="profile-pic">
+          <div id="user">
+          <li id="user-name"><%=info.name%></li>
+          <li id="email"><%=info.email%></li>
+          <li id="contact">Contact</li>
+          <a href="/forgetpass" id="change-pass">Change Password</a>
+          </div>
+        </div>
+       
+      
+
+
+      </div>
+      <div class="middleContainer">
+      
+        <div id="user-details">
+          
+          <!-- <form action="" method="post"> -->
+            <div class="left-middle">
+              <h3>Madatory: </h3>
+              <li>Regisration ID </li> <input type="text" id="reg" class="Input" disabled/>
+              <li>Roll no </li><input type="text" id="rollno" class="Input" disabled/>
+              <li>Course</li>
+              <select name="course" id="course" class="Input" disabled style="color: black; background-color: rgb(173, 166, 166);">
+                <option value="Btech">Btech</option>
+                <option value="BBA">BBA</option>
+                <option value="BCA">BCA</option>
+              </select>           
+              <li>Branches </li>
+              <!-- <input type="text" id="Branches"/> -->
+              <select name="Branches" id="Branches" class="Input" disabled style="color: black; background-color: rgb(173, 166, 166);">
+                <option value="cse">cse</option>
+                <option value="ee">ee</option>
+                <option value="etc">etc</option>
+                <option value="me">me</option>
+                <option value="civil">civil</option>
+              </select> 
+              <li>Semester </li>
+              <!-- <input type="text" id="Semester"/> -->
+              <select name="Semester" id="Semester" class="Input" disabled style="color: black; background-color: rgb(173, 166, 166);">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+              </select>
+            </div>
+            <div class="right-middle">
+              <h3>Optional: </h3>
+            <li>Skills </li><input type="text" id="skills" class="Input" class="Input" disabled/>
+            <li>Linkedin </li><input type="text" id="Linkedin" class="Input" disabled/>
+            <li>Github </li><input type="text" id="Github" class="Input" disabled/>
+            <li>Instagram </li><input type="text" id="Instagram" class="Input" disabled/>
+
+            <li>Portfolio </li><input type="text" id="Portfolio" class="Input" disabled/>
+          </div>
+
+          <!-- </form> -->
+          
+        </div>
+        <div class="btn">  <button type="button" id="editbtn" onclick="makeEditable()" >Edit</button> </div>
+        <div class="btn">  <button type="button" id="updatebtn" onclick="save()" style="display: none;" >Update</button> </div>
+      </div>
+     
+    </div>
+  
+    <script>
+
+        function makeEditable(){
+          
+          let edbt = document.getElementById("editbtn");
+          edbt.style.display="none";
+          let upbt = document.getElementById("updatebtn");
+          upbt.style.display="block";
+
+          // selecttag();
+          inputtag();
+          
+          function inputtag(){
+            let editable = document.getElementsByClassName('Input');
+              for(let i in editable){
+                editable[i].removeAttribute("disabled");
+              }
+          }
+
+        }
+        
+
+      // function selecttag(){
+      //   let selects = document.getElementsByClassName('sIpt');
+      //     for(let i in selects){
+      //       selects[i].removeAttribute("disabled");
+      //     }
+      // }
+
+      fetch();
+      function fetch(){
+
+        var obj ={
+          email: '<%=info.email%>',
+          key: "hello"
+        };
+        
+
+        // console.log("script function"+ obj);        
+        var xhttp = new XMLHttpRequest();              
+        // Typical action to be performed when the document is ready:
+        
+        
+        xhttp.addEventListener("load",function(res){
+
+          var obj = JSON.parse(xhttp.responseText);
+          console.log(obj);
+
+        document.getElementById("reg").value=obj.Regid;
+        document.getElementById("Branches").value=obj.Branch;
+        document.getElementById("Semester").value=obj.Sem;
+        document.getElementById("skills").value=obj.Skills;
+        document.getElementById("rollno").value=obj.rollno;
+        document.getElementById("Linkedin").value=obj.Linkedin;
+        document.getElementById("Github").value=obj.Github;
+        document.getElementById("Instagram").value=obj.Instagram;
+        document.getElementById("course").value=obj.Course;
+        document.getElementById("Portfolio").value=obj.Portfolio;
+        
+        document.getElementById("user-name").innerText=obj.name;
+        document.getElementById("contact").innerText=obj.Contact;
+
+        });
+
+        xhttp.open("get", "/fetch",true);
+        xhttp.setRequestHeader('Content-Type', 'application/json');
+        xhttp.send(); 
+
+
+        }
+
+
+        function save(){
+          let edbt = document.getElementById("editbtn");
+          edbt.style.display="block";
+          let upbt = document.getElementById("updatebtn");
+          upbt.style.display="none";
+          
+              var obj ={   
+              email: '<%=info.email%>',
+              Regid: document.getElementById("reg").value,
+              Branch: document.getElementById("Branches").value,
+              Sem: document.getElementById("Semester").value,
+              Skills: document.getElementById("skills").value,
+              rollno: document.getElementById("rollno").value,
+              Linkedin: document.getElementById("Linkedin").value,
+              Github: document.getElementById("Github").value,
+              Instagram: document.getElementById("Instagram").value,
+              Course: document.getElementById("course").value,
+              Portfolio: document.getElementById("Portfolio").value
+              }
+
+         var xhttp = new XMLHttpRequest();              
+        // Typical action to be performed when the document is ready:
+        
+        
+        xhttp.addEventListener("load",function(res){
+
+          console.log("sended succesfully");
+
+        });
+        xhttp.open("post", "/save",true);
+        // xhttp.setRequestHeader('Content-Type', 'application/url-encoded');
+        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+       
+        xhttp.send(JSON.stringify(obj));
+
+        // console.log(obj);
+      }
+
+    </script>
+</body>
+</html>

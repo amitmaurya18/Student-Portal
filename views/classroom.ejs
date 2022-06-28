@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/classStyles.css">
+    <!-- <link rel="stylesheet" href="./index.css"> -->
+    <title>ClassRoom</title>
+</head>
+<body>
+    
+    
+  <div class="HeaderContainer">
+    <div class="leftcontent">
+     <h1 class="logo1"><a href="/" style="text-decoration: none; color: black;"> StudentPortal</a></h1>
+    </div>
+    <div class="middlecontent">
+      <li class="horizontal_navbar"> <a href="/"> <img class="icon" src="images/home.png"></a></li>
+      <li class="horizontal_navbar" > <a href="https://my-chatcordroom.herokuapp.com/"> <img class="icon" src="images/msg_icon.png"></a></li>
+      <li class="horizontal_navbar" >  <a href="/classroom"><img class="classimg" src="images/classroom.png"/></a> </li>        
+      <!-- <li class="horizontal_navbar" >  <a href="https://classroom.google.com/"><img class="classimg" src="images/classroom.png"/></a> </li>         -->
+      <li class="horizontal_navbar" > <img class="icon" src="images/notification.jpeg"></li>
+    </div>
+    <div class="rightcontent">
+      <!-- <li class="Logout horizontal_navbar" ><a href="/logout"> Login </a></li> -->
+      <li class="Logout horizontal_navbar" ><a href="/logout"> Logout  </a></li>
+      <li class="horizontal_navbar" >  <a href="/profile"><img class="profile" src="images/profilePic.jpeg"/></a> </li>
+    </div>
+  </div>
+
+      <h2 id="welcome">Hello <%=user.name%> welcome to the ClassRoom</h2>
+
+      <div class="classContainer">
+        
+        
+        <!-- <div class="left">
+          <h2 id="left">Assignments</h2>
+          <hr>
+          <marquee></marquee>
+        </div> -->
+        
+        <div class="right">
+          <h2 id="right">Notice</h2><hr>
+          <marquee>The vacation which was scheduled from May 20 to August 20 has now been rescheduled from July 20 to August 20.</marquee>
+          <marquee>This is for information of all students of BBA and BCA 2nd and 3rd year and B. Tech (2nd , 3rd and 4th year) that External Practical Examinations will be held in the scheduled practical class as per time table from June (27, 28, 29), 2022.</marquee>
+          <marquee>This is informed that your Even Semester Examinations are start from 4th July 2022.</marquee>
+          <marquee>Kindly pay your Semester fess and hostel fees otherwise you are not eligible for sit in Examination hall.</marquee>
+        </div>
+
+      </div>
+
+      <div class="content">
+        
+        <ul class="UL">
+          <!-- <li>Subjects</li> -->
+
+          <button class="accordion">Subjects</button>
+          <div class="panel">
+          </div>
+          <button class="accordion">Practicals</button>
+          <div class="panel">
+          </div>
+          <button class="accordion">ClassMates</button>
+          <div class="panel">
+            <p>ClassMates Name </p>
+          </div>
+          <button class="accordion">Teachers</button>
+          <div class="panel">
+            <p>Teachers names</p>
+          </div>
+
+        </ul>
+      </div>
+      <div class="footer">
+        <a href="contact.html">Contact Us</a>
+       </div>
+
+<script>
+
+
+
+  
+  
+  var acc = document.getElementsByClassName("accordion");
+    var i;
+    
+  for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+      console.log("clicked");
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.display === "block") {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+      }
+    });
+  }
+  
+  console.log("<%=user.name%>"); //aditya
+  console.log("<%=user.Course%>"); //Btech
+  console.log("<%=user.Branch%>");  //cse
+  console.log("<%=user.Sem%>"); //7
+  
+  let subName = document.querySelector(".panel");
+  
+  // let subarr = []
+
+  let subcliked = false;
+  function addsubtodom(element,obj){
+    if(subcliked==false){
+      for(let i in obj){
+        // console.log("i",obj.i.notes);
+        console.log("obj.i",obj[i].notes);
+        let p = document.createElement("a");
+        p.innerText= i;
+        p.target='_blank';
+        p.href=obj[i].notes;
+        p.setAttribute("class","subs");
+        element.appendChild(p);
+        // subarr.push(p)
+      }
+      subcliked=true;
+      // console.log(subarr);
+      
+    }
+  }
+
+  // let pan = document.getElementsByClassName("panel")
+  // pan.addEventListener(subcliked,function(){
+  //   console.log("panel when subclicked");
+  // })
+
+    
+
+
+
+
+let practclicked = false;
+function addpractodom(element,obj){
+  if(practclicked==false){
+    for(let i in obj){
+      let p = document.createElement("p");
+      console.log(i);
+      p.innerText= obj[i];
+      p.setAttribute("class","subs");
+      element.appendChild(p);
+      
+    }
+    practclicked=true;
+    
+  }
+}
+
+let sub = document.getElementsByClassName("accordion")[0];
+let pract = document.getElementsByClassName("accordion")[1];
+
+sub.addEventListener("click",()=>{
+  
+  var xhttp = new XMLHttpRequest();              
+  // Typical action to be performed when the document is ready:
+  
+  
+  xhttp.addEventListener("load",function(res){
+    var obj = JSON.parse(xhttp.responseText);
+    console.log("daa",obj);
+    addsubtodom(document.getElementsByClassName("panel")[0],obj);
+    
+  });
+  xhttp.open("get", "/subdata",true);
+  xhttp.setRequestHeader('Content-Type', 'application/json');
+  xhttp.send(); 
+  
+  
+})
+pract.addEventListener("click",()=>{
+  var xhttp = new XMLHttpRequest();
+  xhttp.addEventListener("load",function(res){
+    var pobj = JSON.parse(xhttp.responseText);
+    console.log("practical",pobj);
+    addpractodom(document.getElementsByClassName("panel")[1],pobj);
+    
+  });
+  
+    xhttp.open("get", "/pracdata",true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
+    xhttp.send(); 
+    
+    
+  })
+  
+
+  subs.addEventListener("click",()=>{
+      
+      let text = subs.innerText;
+      console.log(text);
+  
+  
+    })
+  
+  
+  
+
+  
+
+
+</script>
+</body>
+</html>

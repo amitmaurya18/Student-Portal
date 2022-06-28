@@ -1,0 +1,24 @@
+{
+  "name": "chadbox",
+  "version": "1.0.0",
+  "description": "real time chatbox",
+  "main": "chatRoom.js",
+  "engines": {
+    "node": "14.15.0",
+    "npm":"7.21.0"
+  },
+  "scripts": {
+    "start": "node chatRoom.js",
+    "dev":"nodemon server"
+  },
+  "author": "Aditya",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.29.1",
+    "socket.io": "^4.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
