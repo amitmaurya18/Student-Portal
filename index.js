@@ -88,7 +88,7 @@ function msg(req){
 
 
     console.log("token=",req.token);
-    var em= "<h3>Dear "+ req.body.name+", welcome to saitm <a href='https://studentportal-saitm.herokuapp.com/verify_account?verification_key="+req.token+"'>Verify your account</a>!</h3><br />May the delivery force be with you!";
+    var em= "<h3>Dear "+ req.body.name+", welcome to saitm <a href='https://saitmstudentportal.herokuapp.com//verify_account?verification_key="+req.token+"'>Verify your account</a>!</h3><br />May the delivery force be with you!";
         
     const request = mailjet
     .post("send", {'version': 'v3.1'})
