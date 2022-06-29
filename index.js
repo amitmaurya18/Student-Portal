@@ -419,7 +419,7 @@ app.post("/forgetpsd",function(req,res){  //from forgetpsd page
     
 function msg(req){
 
-    var em= "<h3>Dear user, You forget the password right?? if yes <a href='https://studentportal-saitm.herokuapp.com/change_password?verification_key="+req.token+"'>Verify your account click on link</a>!</h3><br />May the delivery force be with you!";
+    var em= "<h3>Dear user, You forget the password right?? if yes <a href='https://saitmstudentportal.herokuapp.com/change_password?verification_key="+req.token+"'>Verify your account click on link</a>!</h3><br />May the delivery force be with you!";
         
     const request = mailjet
     .post("send", {'version': 'v3.1'})
