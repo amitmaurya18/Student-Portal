@@ -138,10 +138,13 @@ text-align: center;
 
 #left, #right{
     text-align: center;
+    /* color: aqua; */
+
 }
 
 .content{
-    width: 40vw;
+  padding: 30px;
+   width: 40vw;
 }
 
 .UL li{
